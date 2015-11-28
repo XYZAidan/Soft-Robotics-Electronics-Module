@@ -1,0 +1,55 @@
+const int pot = A0;
+
+int prevInput = 0;
+int currentInput = 0;
+int potDifference = 0;
+int inflateTime = 0;
+int deflateTime = 0;
+int pump1 = 2;
+int valve1 = 4;
+int pump2 = 3;
+int valve2 = 5;
+
+void setup() {
+
+  Serial.begin(9600);
+  pinMode(pot,INPUT);
+  pinMode(pump1,OUTPUT);
+  pinMode(valve1,OUTPUT);
+  pinMode(pump2,OUTPUT);
+  pinMode(valve2,OUTPUT);
+  prevInput = analogRead(pot);
+  digitalWrite(valve1,LOW);
+  digitalWrite(valve2,LOW);
+  digitalWrite(pump1,LOW);
+  digitalWrite(pump2,LOW);
+}
+
+void loop() {
+  currentInput = analogRead(pot);
+  Serial.println(currentInput);
+  potDifference = currentInput - prevInput;
+  prevInput = currentInput;
+  if (potDifference > 0) {
+    inflateTime = map(potDifference, 0, 1024, 0, 4000);
+    digitalWrite(valve1,LOW);
+    digitalWrite(pump1,HIGH);
+    delay(inflateTime);
+    digitalWrite(valve1,HIGH);
+  }
+  else if (potDifference < 0) {
+    deflateTime = map(potDifference, -0, -1024, 0, 2000);
+    Serial.println(deflateTime);
+    digitalWrite(pump1,LOW);
+    digitalWrite(valve1,HIGH);
+    delay(deflateTime);
+    digitalWrite(valve1,HIGH);
+    
+  }
+  else {
+    digitalWrite(valve1,HIGH);
+  }
+
+  delay(10);
+  
+}
