@@ -1,0 +1,46 @@
+int valveDelay = 2000;  //This is the amount of time between the valve shutting and the pump starting
+int inflateTime1 = 2000;  //This is the amount time that pump1 is inflating for
+int inflateTime2 = 2000;  //This is the amount time that pump2 is inflating for
+int deflateTime = 2000;  //This is the amount of time that both loops deflate for
+
+int pump1 = 2;  //Lets the Arduino know that pump1 is pin 2  -  pump1 goes with valve1
+int valve1 = 4;  //Lets the Arduino know that valve1 is pin 4  -  valve1 goes with pump1
+int pump2 = 3;  //Lets the Arduino know that pump2 is pin 3  -  pump2 goes with valve2
+int valve2 = 5;  //Lets the Arduino know that valve2 is pin 5  -  valve2 goes with pump2
+
+void setup () {
+  
+  pinMode(pump1,OUTPUT);  //Assigns the pin as an output
+  pinMode(valve1,OUTPUT);  //Assigns the pin as an output
+  pinMode(pump2,OUTPUT);  //Assigns the pin as an output
+  pinMode(valve2,OUTPUT);  //Assigns the pin as an output
+  
+}
+
+void loop () {
+
+  digitalWrite(valve1,LOW);  //Closes valve1
+  delay(valveDelay);
+  
+  digitalWrite(pump1,HIGH);  //Turns on pump1
+  delay(inflateTime1);
+  digitalWrite(pump1,LOW);  //Turns off pump1
+  
+  delay(valveDelay);
+  digitalWrite(valve1,HIGH);  //Opens valve 1
+  delay(deflateTime);
+  
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+  digitalWrite(valve2,LOW);  //Closes valve2
+  delay(valveDelay);
+  
+  digitalWrite(pump2,HIGH);  //Turns on pump2
+  delay(inflateTime2);
+  digitalWrite(pump2,LOW);  //Turns off pump2
+  
+  delay(valveDelay);
+  digitalWrite(valve2,HIGH);  //Opens valve2
+  delay(deflateTime);
+ 
+}
